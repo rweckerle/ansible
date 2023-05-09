@@ -16,20 +16,24 @@
   tasks:
 
     - name: Setting hostname
+      tags: AD
       hostname:
         name: '{{ adhostname }}'
         use: systemd
 
     - name: changing hostname in /etc/hosts
+      tags: config
       lineinfile:
         path: /etc/hosts
         regexp: "127.0.1.1 newmachine"
         line: '127.0.1.1 {{ adhostname }}.phytec.de'
 
     - name: Joining AD
+      tags: AD
       shell: echo '{{ password }}' | realm join -U administrator phytec.de
 
     - name: update krb5.conf
+      tags: config
       copy:
         dest: "/etc/krb5.conf"
         content: |
@@ -42,6 +46,7 @@
           default_ccache_name = FILE:/tmp/krb5cc_%{euid}
 
     - name: update sssd.conf
+      tags: config
       copy:
         dest: "/etc/sssd/sssd.conf"
         content: |
@@ -72,6 +77,7 @@
 
 
     - name: set network device mounts
+      tags: config
       blockinfile:
         path: /etc/security/pam_mount.conf.xml
         marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
@@ -90,38 +96,52 @@
           <volume pgrp="domain users" server="augenblix2" path="%(USER)" mountpoint="~/share/augenblix2" fstype="cifs"
                   options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID)" />
     - name: stop sssd
+      tags: AD
       systemd:
         name: sssd
         state: stopped
 
     - name: delete sssd DB
+      tags: AD
       shell: rm -rf /var/lib/sss/db/* && chmod 600 /etc/sssd/sssd.conf
 
     - name: start sssd
+      tags: AD
       systemd:
         name: sssd
         state: started
 
     - name: Give sudo access to domain users
+      tags: AD
       blockinfile:
         path: /etc/sudoers
         insertafter: '%sudo ALL=(ALL:ALL) ALL'
         block: |
           %domain\ users  ALL=(ALL:ALL) ALL
 
+    - name: restart DNS service
+      tags: config
+      systemd:
+        name: systemd-resolved.service
+        state: restarted
+
     - name: install zoom+firefox
+      tags: software
       community.general.snap:
         name:
           - zoom-client
           - firefox
 
     - name: install wine32
+      tags: software
       shell: dpkg --add-architecture i386
 
     - name: add mattermost repository
+      tags: software
       shell: curl -o- https://deb.packages.mattermost.com/setup-repo.sh | bash
 
     - name: install mattermost+wine32
+      tags: software
       apt:
         pkg:
           - wine32
@@ -129,22 +149,26 @@
         update_cache: yes
 
     - name: add Flathub remote
+      tags: software
       community.general.flatpak_remote:
         name: flathub
         state: present
         flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
 
     - name: install Flatpaks
+      tags: software
       community.general.flatpak:
         name:
           - org.onlyoffice.desktopeditors
 
     - name: copy notes files
+      tags: software
       unarchive:
         src: ../files/Notes_basic.tar.gz
         dest: /usr/share
 
     - name: set permissions
+      tags: software
       file:
         path: /usr/share/Notes_basic
         mode: '0777'
@@ -152,11 +176,13 @@
         recurse: true
 
     - name: fill /etc/skel
+      tags: config
       unarchive:
         src: ../files/skel.tar.gz
         dest: /etc/skel
 
     - name: disable phytec user
+      tags: config
       user:
         name: phytec
         state: present
