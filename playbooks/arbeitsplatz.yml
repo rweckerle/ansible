@@ -1,0 +1,164 @@
+---
+- hosts: all
+  become: true
+
+  vars_prompt:
+
+    - name: password
+      prompt: "Enter AD Admin password"
+      private: yes
+
+    - name: adhostname
+      prompt: "Enter desired Hostname"
+      private: no
+
+
+  tasks:
+
+    - name: Setting hostname
+      hostname:
+        name: '{{ adhostname }}'
+        use: systemd
+
+    - name: changing hostname in /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        regexp: "127.0.1.1 newmachine"
+        line: '127.0.1.1 {{ adhostname }}.phytec.de'
+
+    - name: Joining AD
+      shell: echo '{{ password }}' | realm join -U administrator phytec.de
+
+    - name: update krb5.conf
+      copy:
+        dest: "/etc/krb5.conf"
+        content: |
+          [libdefaults]
+          udp_preference_limit = 0
+          default_realm = PHYTEC.DE
+          dns_lookup_realm = true
+          dns_lookup_kdc = true
+          forwardable = yes
+          default_ccache_name = FILE:/tmp/krb5cc_%{euid}
+
+    - name: update sssd.conf
+      copy:
+        dest: "/etc/sssd/sssd.conf"
+        content: |
+          [sssd]
+          domains = phytec.de
+          config_file_version = 2
+          services = nss, pam
+            
+          [domain/phytec.de]
+          default_shell = /bin/bash
+          krb5_store_password_if_offline = True
+          cache_credentials = True
+          krb5_realm = PHYTEC.DE
+          realmd_tags = manages-system joined-with-adcli
+          id_provider = ad
+          fallback_homedir = /home/%u
+          ad_domain = phytec.de
+          use_fully_qualified_names = False
+          ldap_id_mapping = True
+          ldap_schema = ad
+          ldap_idmap_range_min = 10000
+          ldap_idmap_range_max = 60000
+          ldap_idmap_range_size = 50000
+          ldap_idmap_autorid_compat = True
+          ldap_idmap_default_domain = phytec.de
+          access_provider = ad
+          ad_gpo_ignore_unreadable = True
+
+
+    - name: set network device mounts
+      blockinfile:
+        path: /etc/security/pam_mount.conf.xml
+        marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+        insertafter: "<!-- Volume definitions -->"
+        block: |
+          <volume pgrp="domain users" server="Remus" path="home$/%(USER)" mountpoint="~/share/U_home" fstype="cifs"
+                  options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID),vers=2.1" />
+          <volume pgrp="domain users" server="hatschi" path="temp" mountpoint="~/share/T_temp" fstype="cifs"
+                  options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID)" />
+          <volume pgrp="domain users" server="Romulus" path="N-lw" mountpoint="~/share/N_lw" fstype="cifs"
+                  options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID),vers=2.1" />
+          <volume pgrp="domain users" server="Romulus" path="CDImages" mountpoint="~/share/W_CDImages" fstype="cifs"
+                  options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID),vers=2.1" />
+          <volume pgrp="domain users" server="stupidix" path="install" mountpoint="~/share/I_install" fstype="cifs"
+                  options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID)" />
+          <volume pgrp="domain users" server="augenblix2" path="%(USER)" mountpoint="~/share/augenblix2" fstype="cifs"
+                  options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID)" />
+    - name: stop sssd
+      systemd:
+        name: sssd
+        state: stopped
+
+    - name: delete sssd DB
+      shell: rm -rf /var/lib/sss/db/* && chmod 600 /etc/sssd/sssd.conf
+
+    - name: start sssd
+      systemd:
+        name: sssd
+        state: started
+
+    - name: Give sudo access to domain users
+      blockinfile:
+        path: /etc/sudoers
+        insertafter: '%sudo ALL=(ALL:ALL) ALL'
+        block: |
+          %domain\ users  ALL=(ALL:ALL) ALL
+
+    - name: install zoom+firefox
+      community.general.snap:
+        name:
+          - zoom-client
+          - firefox
+
+    - name: install wine32
+      shell: dpkg --add-architecture i386
+
+    - name: add mattermost repository
+      shell: curl -o- https://deb.packages.mattermost.com/setup-repo.sh | bash
+
+    - name: install mattermost+wine32
+      apt:
+        pkg:
+          - wine32
+          - mattermost-desktop
+        update_cache: yes
+
+    - name: add Flathub remote
+      community.general.flatpak_remote:
+        name: flathub
+        state: present
+        flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+    - name: install Flatpaks
+      community.general.flatpak:
+        name:
+          - org.onlyoffice.desktopeditors
+
+    - name: copy notes files
+      unarchive:
+        src: ../files/Notes_basic.tar.gz
+        dest: /usr/share
+
+    - name: set permissions
+      file:
+        path: /usr/share/Notes_basic
+        mode: '0777'
+        owner: root
+        recurse: true
+
+    - name: fill /etc/skel
+      unarchive:
+        src: ../files/skel.tar.gz
+        dest: /etc/skel
+
+    - name: disable phytec user
+      user:
+        name: phytec
+        state: present
+        password_lock: true
+        shell: "/sbin/nologin"

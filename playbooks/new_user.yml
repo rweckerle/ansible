@@ -1,0 +1,31 @@
+---
+- hosts: all
+  become: true
+  vars_prompt:
+
+    - name: username
+      prompt: Enter username
+      private: false
+
+    - name: password
+      prompt: Enter password
+      private: true
+      encrypt: sha512_crypt
+      confirm: true
+      salt_size: 7
+
+  tasks:
+
+    - name: Ensure no_ssh_pw exists
+      group:
+        name: no_ssh_pw
+        state: present
+
+    - name: create User
+      user:
+        name: '{{ username }}'
+        password: '{{ password }}'
+        groups: no_ssh_pw, sudo
+        append: yes
+        shell: /bin/bash
+

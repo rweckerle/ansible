@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+
+    - name: set wireless Nework
+      community.general.nmcli:
+        type: wifi
+        conn_name: WLPhy
+        ssid: WLPhy
+        ifname: '*'
+        wifi_sec:
+          key-mgmt: sae
+          psk: ZooTV-mfa6EJi24r_vc2J
+        autoconnect: true
+        state: present

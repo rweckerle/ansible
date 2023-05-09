@@ -1,0 +1,112 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: install required packages
+      apt:
+        update_cache: yes
+        name:
+          - python3-pip
+          - virtualenv
+          - git
+        state: present
+    
+    - name: Create /opt/privacyideaadm
+      file:
+        path: /opt/privacyideaadm
+        state: directory
+        mode: '0755'
+
+    - name: install requirements
+      pip:
+        name:
+          - alabaster==0.7.13
+          - Babel==2.11.0
+          - certifi==2022.12.7
+          - cffi==1.15.1
+          - charset-normalizer==3.0.1
+          - click==8.1.3
+          - cryptography==39.0.0
+          - docutils==0.19
+          - idna==3.4
+          - imagesize==1.4.1
+          - install==1.3.5
+          - Jinja2==3.1.2
+          - MarkupSafe==2.1.2
+          - packaging==23.0
+          - pycparser==2.21
+          - Pygments==2.14.0
+          - python-yubico==1.3.3
+          - pytz==2022.7.1
+          - pyusb==1.2.1
+          - qrcode==7.3.1
+          - requests==2.28.2
+          - six==1.16.0
+          - snowballstemmer==2.2.0
+          - Sphinx==6.1.3
+          - sphinxcontrib-applehelp==1.0.4
+          - sphinxcontrib-devhelp==1.0.2
+          - sphinxcontrib-htmlhelp==2.0.0
+          - sphinxcontrib-jsmath==1.0.1
+          - sphinxcontrib-qthelp==1.0.3
+          - sphinxcontrib-serializinghtml==1.1.5
+          - urllib3==1.26.14
+        virtualenv: /opt/privacyideaadm
+
+    - name: install Privacyideaadm
+      pip:
+        name: git+https://github.com/privacyidea/privacyideaadm
+        virtualenv: /opt/privacyideaadm
+
+    - name: create /etc/privacyidea
+      file:
+        path: /etc/privacyidea
+        state: directory
+        mode: '0755'
+
+    - name: create/update authorizedkeyscommand
+      copy:
+        dest: /etc/privacyidea/authorizedkeyscommand
+        content: |
+          [Default]
+          url=https://polemix.phytec.de
+          admin=readadmin
+          password=WQIJhmswLU7jnKggVKOl
+          nosslcheck=False
+        force: true
+
+
+    - name: change sshd_config
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '{{ item.From }}'
+        line: '{{ item.To }}'
+        state: present
+        validate: "sshd -t -f %s"
+      with_items:
+          - { From: '^AuthorizedKeysCommandUser ', To: 'AuthorizedKeysCommandUser nobody'}
+          - { From: '^AuthorizedKeysCommand ', To: 'AuthorizedKeysCommand /opt/privacyideaadm/bin/privacyidea-authorizedkeys'}
+
+    - name: match group no_ssh_pw
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        insertafter: "^AuthorizedKeysCommand"
+        line: "Match group no_ssh_pw"
+        firstmatch: yes
+        state: present
+        validate: "sshd -t -f %s"
+
+    - name: disable pw login
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        insertafter: "Match group no_ssh_pw"
+        line: "PasswordAuthentication no"
+        firstmatch: yes
+        state: present
+        validate: "sshd -t -f %s"
+
+    - name: restart ssh process
+      service:
+        name: ssh
+        state: restarted
+
