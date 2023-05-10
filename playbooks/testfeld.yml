@@ -33,6 +33,19 @@
     - name: Joining AD
       shell: echo '{{ password }}' | realm join -U administrator phytec.de
 
+    - name: fill /etc/skel
+      unarchive:
+        src: ../files/skel.tar.gz
+        dest: /etc/skel
+        owner: root
+        group: root
+
+    - name: add /etc/skel in pam config
+      lineinfile:
+        path: /etc/pam.d/common-account
+        line: session required pam_mkhomedir.so skel=/etc/skel/ umask=0077
+        state: present
+
     - name: update krb5.conf
       copy:
         dest: "/etc/krb5.conf"
@@ -74,11 +87,12 @@
           access_provider = ad
           ad_gpo_ignore_unreadable = True
 
-    - name: install icinga2
+    - name: install icinga2+firefox
       apt:
         pkg:
           - icinga2
           - monitoring-plugins
+          - firefox
         update_cache: yes
 
     - name: set PAM network device mounts

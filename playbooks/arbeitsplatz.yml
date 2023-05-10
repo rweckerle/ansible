@@ -74,7 +74,15 @@
           ldap_idmap_default_domain = phytec.de
           access_provider = ad
           ad_gpo_ignore_unreadable = True
+          skel_dir = /etc/skel
 
+
+    - name: add /etc/skel in pam config
+      tags: config
+      lineinfile:
+        path: /etc/pam.d/common-account
+        line: session required pam_mkhomedir.so skel=/etc/skel/ umask=0077
+        state: present
 
     - name: set network device mounts
       tags: config
@@ -95,6 +103,7 @@
                   options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID)" />
           <volume pgrp="domain users" server="augenblix2" path="%(USER)" mountpoint="~/share/augenblix2" fstype="cifs"
                   options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID)" />
+
     - name: stop sssd
       tags: AD
       systemd:
@@ -123,6 +132,12 @@
       tags: config
       systemd:
         name: systemd-resolved.service
+        state: restarted
+
+    - name: restart networkmanager
+      tags: config
+      systemd:
+        name: NetworkManager.service
         state: restarted
 
     - name: install zoom+firefox
