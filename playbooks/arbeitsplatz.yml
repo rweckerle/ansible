@@ -14,6 +14,38 @@
 
 
   tasks:
+    - name: install software prerequisite
+      tags: software
+      apt:
+        pkg: 
+          - curl
+          - build-essential
+          - ubuntu-desktop-minimal
+          - sssd
+          - sssd-tools
+          - samba
+          - smbclient
+          - cups
+          - cifs-utils
+          - libpam-mount
+          - libpam-ccreds
+          - keyutils
+          - hxtools
+          - realmd
+          - adcli
+          - vim
+          - unattended-upgrades
+          - apt-transport-https
+          - wget
+          - gnupg
+          - evolution
+          - evolution-ews
+          - guake
+          - flatpak
+          - git
+          - wine
+          - winetricks
+        update_cache: yes
 
     - name: Setting hostname
       tags: AD
@@ -128,12 +160,6 @@
         block: |
           %domain\ users  ALL=(ALL:ALL) ALL
 
-    - name: restart DNS service
-      tags: config
-      systemd:
-        name: systemd-resolved.service
-        state: restarted
-
     - name: restart networkmanager
       tags: config
       systemd:
@@ -147,7 +173,7 @@
           - zoom-client
           - firefox
 
-    - name: install wine32
+    - name: add 32-Bit arch for wine32
       tags: software
       shell: dpkg --add-architecture i386
 
@@ -161,7 +187,7 @@
         pkg:
           - wine32
           - mattermost-desktop
-        update_cache: yes
+        update_cache: no
 
     - name: add Flathub remote
       tags: software
