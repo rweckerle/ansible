@@ -1,5 +1,5 @@
 ---
-- name: enable DHCP snooping
+- name: configure dhcp snooping
   hosts: dellos6
   become: true
   gather_facts: no
@@ -11,8 +11,15 @@
           - ip dhcp snooping
           - ip dhcp snooping vlan 1-4093
 
-    - name: enable trusted ports
+    - name: enable trusted port-channel ports
       dellos6_config:
         lines:
           - ip dhcp snooping trust
         parents: ['interface range port-channel all']
+
+    - name: enable trusted tengigabit ports
+      dellos6_config:
+        lines:
+          - ip dhcp snooping trust
+        parents: ['interface range tengigabitethernet all']
+        save: yes
