@@ -1,0 +1,74 @@
+---
+
+dellos6:
+  hosts:
+    SW_A_01_EG_01: 
+      ansible_host: 172.25.132.1
+    SW_A_01_EG_02: 
+      ansible_host: 172.25.132.33
+    SW_A_01_EG_03: 
+      ansible_host: 172.25.132.65
+    SW_A_01_EG_04:
+      ansible_host: 172.25.132.97
+    SW_A_01_ZG_01: 
+      ansible_host: 172.25.132.129
+    SW_A_01_ZG_02: 
+      ansible_host: 172.25.132.161
+    SW_A_01_ZG_03: 
+      ansible_host: 172.25.132.193
+    SW_A_01_ZG_04: 
+      ansible_host: 172.25.132.225
+    SW_A_01_OG_01: 
+      ansible_host: 172.25.133.1
+    SW_A_01_OG_02: 
+      ansible_host: 172.25.133.33
+    SW_A_01_OG_03: 
+      ansible_host: 172.25.133.65
+    SW_A_01_OG_04: 
+      ansible_host: 172.25.133.97
+    SW_A_02_EG_01: 
+      ansible_host: 172.25.133.129
+    SW_A_02_EG_02: 
+      ansible_host: 172.25.133.161
+    SW_A_02_EG_03: 
+      ansible_host: 172.25.133.193
+    SW_A_02_EG_04: 
+      ansible_host: 172.25.133.225
+    SW_A_02_ZG_01: 
+      ansible_host: 172.25.134.1
+    SW_A_02_ZG_02: 
+      ansible_host: 172.25.134.33
+    SW_A_02_ZG_03: 
+      ansible_host: 172.25.134.65
+    SW_A_02_ZG_04: 
+      ansible_host: 172.25.134.97
+    SW_A_02_OG_01: 
+      ansible_host: 172.25.134.129
+    SW_A_02_OG_02: 
+      ansible_host: 172.25.134.161
+    SW_A_02_OG_03: 
+      ansible_host: 172.25.134.193
+    SW_A_02_OG_04: 
+      ansible_host: 172.25.134.225
+
+  vars:
+    ansible_user: admin
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: dellemc.os6.os6
+    ansible_command_timeout: 120
+    ansible_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          33353261656564623933363539393939363839633435346531666138626461303432313564333836
+          3661363936663863633035633163363134346338326630620a363637393230633631376433373866
+          65363835333262353638356436333839613334373861613137323436656532386462653065386431
+          6533373865373637310a383134303930353630633433373234356438333164343834346162663639
+          3062
+    ansible_become_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39396165373461616639643733663334643466643839393239643762653739316238623038303938
+          3331316362386531376337356539313164383935323530360a616331396362316461333037653463
+          66386630613335666462353238653566653366656531623365393437396639303135313236336137
+          3135613138316539310a626634653366623433383065623334343238383763326439306331623066
+          6261

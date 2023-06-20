@@ -1,0 +1,4 @@
+---
+- name: Playbook Swtich Test
+  hosts: dellos6
+  gather_facts: true
