@@ -17,6 +17,7 @@ ls-mysql02
 ls-mysql03
 ls-patchwork
 ls-patchwork2
+ls-softix ansible_host=172.25.0.128
 ls-vcs
 lws-remote
 Mentor3DLib

@@ -1,0 +1,26 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Add icinga GPG Key
+      apt_key:
+        url: https://packages.icinga.com/icinga.key
+        keyring: /usr/share/keyrings/icinga-archive-keyring.gpg
+        state: present
+
+    - name: Add icinga Repo
+      apt_repository:
+        repo: deb [signed-by=/usr/share/keyrings/icinga-archive-keyring.gpg] https://packages.icinga.com/ubuntu icinga-jammy main
+        state: present
+
+    - name: Add icinga src repo
+      apt_repository:
+        repo: deb-src [signed-by=/usr/share/keyrings/icinga-archive-keyring.gpg] https://packages.icinga.com/ubuntu icinga-jammy main
+    
+    - name: install icinga2
+      apt:
+        pkg:
+          - icinga2
+          - monitoring-plugins
+        update_cache: yes
