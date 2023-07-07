@@ -1,0 +1,4 @@
+adopt:
+  hosts:
+    tws-testfield032:
+      ansible_host: 172.25.32.201

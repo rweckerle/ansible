@@ -1,0 +1,4 @@
+- name: Install testfield software
+  apt:
+    name: firefox
+    state: present

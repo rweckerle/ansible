@@ -1,0 +1,31 @@
+---
+- hosts: adopt
+  become: true
+
+  vars:
+    ansible_user: phytec
+    ansible_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          36393537613863313236373663326363343034646338653536653132313937313036366665633738
+          3262323934393461666332396438663761363136386231330a366463356131363565373833666562
+          32646634303732376461336662326263396564363237356636313663346364383730326632656262
+          6333376630353938350a376632323431333332373335323039613134656662303165323263326234
+          3833
+    ansible_become_password: '{{ ansible_password }}'
+
+  tasks:
+    - name: Setting hostname
+      hostname:
+        name: '{{ inventory_hostname }}'
+        use: systemd
+
+    - name: changing hostname in /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        regexp: "127.0.1.1 newmachine"
+        line: '127.0.1.1 {{ inventory_hostname }}.phytec.de'
+
+  roles:
+    - icinga
+    - joinad
+    - testfeldsoftware

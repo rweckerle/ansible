@@ -1,0 +1,37 @@
+ubuntu:
+  hosts:
+    Amnesix:
+    bartrik:
+    cups:
+    ecus:
+    errata:
+    gaudeamus:
+    intranet01:
+    intranet02:
+    ls-backuppc:
+    ls-jira:
+    ls-jumphost:
+    ls-mybackup:
+    ls-mybackup02:
+    ls-mybackup03:
+    ls-mysql:
+    ls-mysql02:
+    ls-mysql03:
+    ls-patchwork:
+    ls-patchwork2:
+    ls-review:
+    ls-softix:
+    ls-vcs:
+    lws-remote:
+    Mentor3DLib:
+    miraculix:
+    Mopsen:
+    odalix:
+    panix:
+    polemix:
+    Studicus:
+    tunnelnix:
+
+fedora:
+  hosts:
+    musculus:
