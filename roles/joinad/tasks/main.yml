@@ -61,9 +61,7 @@
     state: stopped
 
 - name: delete sssd DB
-  file:
-    path: /var/lib/sss/db/*
-    state: absent
+  shell: rm -rf /var/lib/sss/db/*
 
 - name: change permission of sssd.conf
   file:

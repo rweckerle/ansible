@@ -1,0 +1,4 @@
+testfeld:
+  hosts:
+    lws-dev-010:
+      ansible_host: 172.25.33.30
