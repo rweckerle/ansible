@@ -68,12 +68,21 @@
     path: /etc/sssd/sssd.conf
     mode: '600'
 
-- name: disable sockets
+- name: disable sssd-pam.socket
   systemd:
-    name:
-      - sssd-nss.socket
-      - sssd-pam.socket
-      - sssd-pam-priv.socket
+    name: sssd-pam.socket
+    enabled: false
+    state: stopped
+
+- name: disable ssd-pam-priv.socket
+  systemd:
+    name: sssd-pam-priv.socket
+    enabled: false
+    state: stopped
+
+- name: disable sssd-nss.socket
+  systemd:
+    name: sssd-nss.socket
     enabled: false
     state: stopped
 

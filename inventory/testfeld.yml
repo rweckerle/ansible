@@ -1,4 +1,4 @@
 testfeld:
   hosts:
-    lws-dev-042:
-      ansible_host: 172.25.32.214
+    lws-ci007:
+      ansible_host: 172.25.33.35
