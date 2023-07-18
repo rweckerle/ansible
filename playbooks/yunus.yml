@@ -1,0 +1,23 @@
+---
+- hosts: adopt
+  become: true
+
+  tasks:
+    - name: install software
+      apt:
+        name:
+          - openssh-server
+          - tftpd-hpa
+          - xinetd
+          - virtualenv
+          - cifs-utils
+          - bindfs
+          - sshpass
+          - isc-dhcp-server
+          - libudev-dev
+          - libudev1
+          - libusb-1.0-0
+          - libusb-1.0-0-dev
+          - libusb-dev
+          - libbluetooth-dev
+        state: present
