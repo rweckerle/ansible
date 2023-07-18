@@ -1,0 +1,14 @@
+---
+- name: copy notes files
+  tags: software
+  unarchive:
+    src: Notes_basic.tar.gz
+    dest: /usr/share
+
+- name: set permissions
+  tags: software
+  file:
+    path: /usr/share/Notes_basic
+    mode: '0777'
+    owner: root
+    recurse: true

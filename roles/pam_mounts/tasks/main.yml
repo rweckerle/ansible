@@ -1,0 +1,21 @@
+---
+- name: set network device mounts
+  tags: config
+  blockinfile:
+    path: /etc/security/pam_mount.conf.xml
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+    insertafter: "<!-- Volume definitions -->"
+    block: |
+      <volume pgrp="domain users" server="Remus" path="home$/%(USER)" mountpoint="~/share/U_home" fstype="cifs"
+              options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID),vers=2.1" />
+      <volume pgrp="domain users" server="hatschi" path="temp" mountpoint="~/share/T_temp" fstype="cifs"
+              options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID)" />
+      <volume pgrp="domain users" server="Romulus" path="N-lw" mountpoint="~/share/N_lw" fstype="cifs"
+              options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID),vers=2.1" />
+      <volume pgrp="domain users" server="Romulus" path="CDImages" mountpoint="~/share/W_CDImages" fstype="cifs"
+              options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID),vers=2.1" />
+      <volume pgrp="domain users" server="stupidix" path="install" mountpoint="~/share/I_install" fstype="cifs"
+              options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID)" />
+      <volume pgrp="domain users" server="augenblix2" path="%(USER)" mountpoint="~/share/augenblix2" fstype="cifs"
+              options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID)" />
+

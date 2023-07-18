@@ -1,0 +1,75 @@
+---
+- name: Add onlyoffice gpg keys
+  apt_key:
+    keyserver: "keyserver.ubuntu.com"
+    id: "CB2DE8E5"
+    state: present
+
+- name: Add onlyoffice repositories
+  apt_repository:
+    repo: "deb https://download.onlyoffice.com/repo/debian squeeze main"
+    state: present
+
+- name: add 32-Bit arch for wine32
+  tags: software
+  shell: dpkg --add-architecture i386
+
+- name: add mattermost repository
+  tags: software
+  shell: curl -o- https://deb.packages.mattermost.com/setup-repo.sh | bash
+
+- name: install software prerequisite
+  tags: software
+  apt:
+    pkg: 
+      - wine32
+      - mattermost-desktop
+      - curl
+      - build-essential
+      - ubuntu-desktop-minimal
+      - sssd
+      - sssd-tools
+      - samba
+      - smbclient
+      - cups
+      - cifs-utils
+      - libpam-mount
+      - libpam-ccreds
+      - keyutils
+      - hxtools
+      - realmd
+      - adcli
+      - vim
+      - unattended-upgrades
+      - apt-transport-https
+      - wget
+      - gnupg
+      - evolution
+      - evolution-ews
+      - guake
+      - flatpak
+      - git
+      - wine
+      - winetricks
+      - onlyoffice-desktopeditors
+    update_cache: yes
+
+- name: install snap packages
+  community.general.snap:
+    name:
+      - zoom-client
+      - firefox 
+
+- name: add Flathub remote
+  tags: software
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+      #- name: install Flatpaks
+      #  tags: software
+      #  community.general.flatpak:
+      #    name:
+      #      - org.onlyoffice.desktopeditors
+

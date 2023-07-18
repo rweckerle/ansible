@@ -20,4 +20,5 @@
   roles:
     - icinga
     - testfeldsoftware
+    - unattendedautoremove
     - joinad
