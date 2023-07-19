@@ -3,7 +3,7 @@
 
 - name: fill /etc/skel
   unarchive:
-    src: ../files/skel.tar.gz
+    src: skel.tar.gz
     dest: /etc/skel
     owner: root
     group: root

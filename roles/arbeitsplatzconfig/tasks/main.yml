@@ -7,15 +7,6 @@
     block: |
       %domain\ users  ALL=(ALL:ALL) ALL
 
-- name: fill /etc/skel
-   tags: config
-   unarchive:
-    src: skel.tar.gz
-    dest: /etc/skel
-    owner: root
-    group: root
-
-
 - name: disable phytec user
   tags: config
   user:
