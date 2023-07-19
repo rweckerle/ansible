@@ -11,15 +11,12 @@
     state: present
 
 - name: add 32-Bit arch for wine32
-  tags: software
   shell: dpkg --add-architecture i386
 
 - name: add mattermost repository
-  tags: software
   shell: curl -o- https://deb.packages.mattermost.com/setup-repo.sh | bash
 
 - name: install software prerequisite
-  tags: software
   apt:
     pkg: 
       - wine32
@@ -52,16 +49,14 @@
       - wine
       - winetricks
       - onlyoffice-desktopeditors
+      - firefox
     update_cache: yes
 
-- name: install snap packages
-  community.general.snap:
-    name:
-      - zoom-client
-      - firefox 
+- name: install zoom
+  apt:
+    deb: https://zoom.us/client/latest/zoom_amd64.deb
 
 - name: add Flathub remote
-  tags: software
   community.general.flatpak_remote:
     name: flathub
     state: present

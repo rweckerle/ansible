@@ -1,3 +1,20 @@
+- name: install needed software
+  apt:
+    pkg:
+      - sssd
+      - sssd-tools
+      - samba
+      - smbclient
+      - cifs-utils
+      - cups
+      - realmd
+      - curl
+      - keyutils
+      - hxtools
+      - adcli
+      - wget
+    state: present
+
 - name: Joining AD
   shell: echo '{{ adpass }}' | realm join -U administrator phytec.de
 

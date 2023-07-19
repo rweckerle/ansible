@@ -13,9 +13,6 @@
         path: /etc/hosts
         regexp: "127.0.1.1 newmachine"
         line: '127.0.1.1 {{ inventory_hostname }}.phytec.de'
-  tasks:
-    - name: shut down machine
-      command: shutdown now
 
   roles:
     - icinga

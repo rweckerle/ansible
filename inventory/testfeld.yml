@@ -1,4 +1,4 @@
 testfeld:
   hosts:
-    tws-testfield021:
-      ansible_host: 172.25.33.74
+    lws-testnuc:
+      ansible_host: 172.25.32.178
