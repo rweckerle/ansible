@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: adopt
   become: true
 
   pre_tasks:
@@ -12,6 +12,7 @@
       lineinfile:
         path: /etc/hosts
         regexp: "127.0.1.1 newmachine"
+        line: '127.0.1.1 {{ inventory_hostname }}.phytec.de'
 
     - name: restart networkmanager
       tags: config
@@ -20,9 +21,7 @@
         state: restarted
 
   roles:
-    - icinga
     - arbeitsplatzsoftware
-    - onlyoffice.desktopeditors
     - joinad
     - notes
     - unattendedautoremove

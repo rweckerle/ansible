@@ -7,11 +7,11 @@
     block: |
       %domain\ users  ALL=(ALL:ALL) ALL
 
-- name: disable phytec user
-  tags: config
-  user:
-    name: phytec
-    state: present
-    password_lock: true
-    shell: "/sbin/nologin"
+      #- name: disable phytec user
+      #  tags: config
+      #  user:
+      #    name: phytec
+      #    state: present
+      #    password_lock: true
+      #    shell: "/sbin/nologin"
 
