@@ -1,4 +1,0 @@
-testfeld:
-  hosts:
-    lws-testnuc:
-      ansible_host: 172.25.32.178

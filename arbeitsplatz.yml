@@ -1,5 +1,5 @@
 ---
-- hosts: adopt
+- hosts: arbeitsplatz
   become: true
 
   pre_tasks:
