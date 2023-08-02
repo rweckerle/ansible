@@ -14,7 +14,7 @@
     state: directory
     mode: '0755'
 
-- name: install requirements
+- name: install pip packages
   pip:
     name:
       - alabaster==0.7.13
