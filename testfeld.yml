@@ -1,5 +1,5 @@
 ---
-- hosts: testfeld
+- hosts: shuttles
   become: true
 
   pre_tasks:

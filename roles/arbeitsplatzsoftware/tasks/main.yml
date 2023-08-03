@@ -49,7 +49,6 @@
       - wine
       - winetricks
       - onlyoffice-desktopeditors
-      - firefox
     update_cache: yes
 
 - name: install zoom
