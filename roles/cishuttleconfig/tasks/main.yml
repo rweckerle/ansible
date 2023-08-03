@@ -1,0 +1,115 @@
+---
+- name: purge cloud-init
+  apt:
+    name: cloud-init
+    purge: true
+    autoremove: true
+    state: absent
+
+- name: delete all cloud-init leftovers
+  shell: rm -rf /etc/cloud
+
+- name: disable systemd-networkd-wait-online.service
+  systemd:
+    name: systemd-networkd-wait-online.service
+    enabled: false
+    state: stopped
+
+- name: temporary fix for /home/automatix
+  shell: cp -R /etc/skel/* /home/automatix/ && chown -R automatix:domain\ users /home/automatix
+
+- name: add automatix to groups
+  user:
+    name: automatix
+    groups: dialout,plugdev,systemd-journal-remote
+    append: yes
+
+- name: create mountpoint N_lw
+  file:
+    path: /home/automatix/mnt/N_lw
+    state: directory
+    owner: automatix
+    group: "domain users"
+
+- name: create mountpoint sw_data
+  file:
+    path: /home/automatix/mnt/sw_data
+    state: directory
+    owner: automatix
+    group: "domain users"
+
+- name: create .smb directory
+  file:
+    path: /home/automatix/.smb
+    state: directory
+    owner: automatix
+    group: "domain users"
+
+- name: create .config directory
+  file:
+    path: /home/automatix/.config
+    state: directory
+    owner: automatix
+    group: "domain users"
+
+- name: create ptf directory
+  file:
+    path: /home/automatix/.config/ptf
+    state: directory
+    owner: automatix
+    group: "domain users"
+
+- name: create .ssh directory
+  file:
+    path: /home/automatix/.ssh
+    state: directory
+    owner: automatix
+    group: "domain users"
+
+- name: add smbcredentials
+  copy:
+    src: .smbcredentials
+    dest: /home/automatix/.smb/.smbcredentials
+    mode: 0600
+    owner: automatix
+    group: "domain users"
+
+- name: update fstab
+  blockinfile:
+    path: /etc/fstab
+    state: present
+    block: |
+      # Romulus
+      //Romulus/N-lw /home/automatix/mnt/N_lw cifs credentials=/home/automatix/.smb/.smbcredentials,file_mode=0600,dir_mode=0700,uid=automatix,nosuid,nodev,vers=2.1,nofail  0 0
+
+      # Remus
+      //ls-softix/data /home/automatix/mnt/sw_data cifs credentials=/home/automatix/.smb/.smbcredentials,file_mode=0600,dir_mode=0700,uid=automatix,nosuid,nodev,vers=2.1,domain=phytec.de,nofail  0 0
+  
+- name: ptf/local.yml
+  copy:
+    dest: "/home/automatix/.config/ptf/local.yml"
+    content: |
+      ethernet0:
+        name: enp3s0
+        ip: 192.168.0.1
+      ethernet1:
+        name: enp3s0
+        ip: 192.168.3.10
+      tftp:
+        path: /var/tftp
+      nfs:
+        path: /var/nfs_files
+      nfsroot:
+        path: /var/nfs_root
+      share:
+        path: /home/automatix/mnt
+    owner: automatix
+    group: "domain users"
+
+- name: .ssh/authorized_keys
+  copy:
+    dest: "/home/automatix/.ssh/authorized_keys"
+    content: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/E6NWle+zjd9NAzwc3uLGZcE90aYhh+vVfqCTs7Dfk/5C09BuawzheMMdEt/Mc2NmPyPxuvuK6akV53dQW5bNxyaKc+nS5MTcX7vACmO4rkJvU9qCHgB4sg9w+E1jI0z1fJ+ceDdtZqMDcTmGXJLZWmLo9HapOgyNnnjlQS4ZezHNjg+Qsysi/B6JGIZ5JtM7PX1+G64Rtn+kN1ImMMLHruE6yJt++HxEDXS6gZKvnJgCYh/qlskd5ZpgTcBDccLf7dGbmsRHnYCgvYEUZrVOEYeAkw46da5lcX2xhwMazXQdPQyq2ZpV1NgaCV72YPVF85JRYLkfczJStLL3v2f
+    owner: automatix
+    group: "domain users"

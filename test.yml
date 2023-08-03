@@ -1,0 +1,6 @@
+---
+- hosts: shuttles
+  become: true
+
+  roles:
+    - cishuttleconfig
