@@ -1,6 +1,6 @@
 ---
-- hosts: shuttles
+- hosts: arbeitsplatz
   become: true
 
   roles:
-    - cishuttleconfig
+    - nosnap
