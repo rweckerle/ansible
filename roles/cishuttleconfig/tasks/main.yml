@@ -104,6 +104,6 @@
   copy:
     dest: "/home/automatix/.ssh/authorized_keys"
     content: |
-      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/E6NWle+zjd9NAzwc3uLGZcE90aYhh+vVfqCTs7Dfk/5C09BuawzheMMdEt/Mc2NmPyPxuvuK6akV53dQW5bNxyaKc+nS5MTcX7vACmO4rkJvU9qCHgB4sg9w+E1jI0z1fJ+ceDdtZqMDcTmGXJLZWmLo9HapOgyNnnjlQS4ZezHNjg+Qsysi/B6JGIZ5JtM7PX1+G64Rtn+kN1ImMMLHruE6yJt++HxEDXS6gZKvnJgCYh/qlskd5ZpgTcBDccLf7dGbmsRHnYCgvYEUZrVOEYeAkw46da5lcX2xhwMazXQdPQyq2ZpV1NgaCV72YPVF85JRYLkfczJStLL3v2f
+      AAAAB3NzaC1yc2EAAAADAQABAAABAQC/E6NWle+zjd9NAzwc3uLGZcE90aYhh+vVfqCTs7Dfk/5C09BuawzheMMdEt/Mc2NmPyPxuvuK6akV53dQW5bNxyaKc+nS5MTcX7vACmO4rkJvU9qCHgB4sg9w+E1jI0z1fJ+ceDdtZqMDcTmGXJLZWmLo9HapOgyNnnjlQS4ZezHNjg+Qsysi/B6JGIZ5JtM7PX1+G64Rtn+kN1ImMMLHruE6yJt++HxEDXS6gZKvnJgCYh/qlskd5ZpgTcBDccLf7dGbmsRHnYCgvYEUZrVOEYeAkw46da5lcX2xhwMazXQdPQyq2ZpV1NgaCV72YPVF85JRYLkfczJStLL3v2fz automatix@phytec.de
     owner: automatix
     group: "domain users"
