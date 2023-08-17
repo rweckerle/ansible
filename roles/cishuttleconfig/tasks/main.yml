@@ -9,12 +9,6 @@
 - name: delete all cloud-init leftovers
   shell: rm -rf /etc/cloud
 
-- name: disable systemd-networkd-wait-online.service
-  systemd:
-    name: systemd-networkd-wait-online.service
-    enabled: false
-    state: stopped
-
 - name: set group memberships for all users
   lineinfile:
     path: /etc/security/group.conf
@@ -26,14 +20,14 @@
 
 - name: create mountpoint N_lw
   file:
-    path: /home/automatix/mnt/N_lw
+    path: /mnt/N_lw
     state: directory
     owner: automatix
     group: "domain users"
 
 - name: create mountpoint sw_data
   file:
-    path: /home/automatix/mnt/sw_data
+    path: /mnt/sw_data
     state: directory
     owner: automatix
     group: "domain users"
@@ -80,10 +74,10 @@
     state: present
     block: |
       # Romulus
-      //Romulus/N-lw /mnt/N_lw cifs credentials=/home/automatix/.smb/.smbcredentials,file_mode=0600,dir_mode=0700,uid=automatix,gid=10513,nosuid,nodev,vers=2.1,nofail  0 0
+      //Romulus/N-lw /mnt/N_lw cifs credentials=/home/automatix/.smb/.smbcredentials,file_mode=0664,dir_mode=0775,uid=automatix,gid=10513,nosuid,nodev,vers=2.1,nofail  0 0
 
       # Remus
-      //ls-softix/data /mnt/sw_data cifs credentials=/home/automatix/.smb/.smbcredentials,file_mode=0600,dir_mode=0700,uid=automatix,gid=10513,nosuid,nodev,vers=2.1,domain=phytec.de,nofail  0 0
+      //ls-softix/data /mnt/sw_data cifs credentials=/home/automatix/.smb/.smbcredentials,file_mode=0664,dir_mode=0775,uid=automatix,gid=10513,nosuid,nodev,vers=2.1,domain=phytec.de,nofail  0 0
   
 - name: ptf/local.yml
   copy:
