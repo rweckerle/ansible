@@ -15,14 +15,14 @@
     enabled: false
     state: stopped
 
-- name: temporary fix for /home/automatix
-  shell: cp -R /etc/skel/* /home/automatix/ && chown -R automatix:domain\ users /home/automatix
+- name: set group memberships for all users
+  lineinfile:
+    path: /etc/security/group.conf
+    line: "*;*;*;Al0000-2400;dialout,plugdev,netdev,systemd-journal-remote"
+    state: present
 
-- name: add automatix to groups
-  user:
-    name: automatix
-    groups: dialout,plugdev,systemd-journal-remote
-    append: yes
+- name: permission fix for /home/automatix
+  shell: cp -R /etc/skel/* /home/automatix/ && chown -R automatix:domain\ users /home/automatix
 
 - name: create mountpoint N_lw
   file:
@@ -70,7 +70,7 @@
   copy:
     src: .smbcredentials
     dest: /home/automatix/.smb/.smbcredentials
-    mode: 0600
+    mode: 0640
     owner: automatix
     group: "domain users"
 
@@ -80,10 +80,10 @@
     state: present
     block: |
       # Romulus
-      //Romulus/N-lw /home/automatix/mnt/N_lw cifs credentials=/home/automatix/.smb/.smbcredentials,file_mode=0600,dir_mode=0700,uid=automatix,nosuid,nodev,vers=2.1,nofail  0 0
+      //Romulus/N-lw /mnt/N_lw cifs credentials=/home/automatix/.smb/.smbcredentials,file_mode=0600,dir_mode=0700,uid=automatix,gid=10513,nosuid,nodev,vers=2.1,nofail  0 0
 
       # Remus
-      //ls-softix/data /home/automatix/mnt/sw_data cifs credentials=/home/automatix/.smb/.smbcredentials,file_mode=0600,dir_mode=0700,uid=automatix,nosuid,nodev,vers=2.1,domain=phytec.de,nofail  0 0
+      //ls-softix/data /mnt/sw_data cifs credentials=/home/automatix/.smb/.smbcredentials,file_mode=0600,dir_mode=0700,uid=automatix,gid=10513,nosuid,nodev,vers=2.1,domain=phytec.de,nofail  0 0
   
 - name: ptf/local.yml
   copy:
@@ -102,7 +102,7 @@
       nfsroot:
         path: /var/nfs_root
       share:
-        path: /home/automatix/mnt
+        path: /mnt
     owner: automatix
     group: "domain users"
 

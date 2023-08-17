@@ -1,5 +1,5 @@
 ---
-- hosts: shuttles
+- hosts: cishuttles
   become: true
 
   pre_tasks:
