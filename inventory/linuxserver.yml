@@ -13,7 +13,9 @@ linuxserver:
         intranet01:
         intranet02:
         intranet03:
+        ls-automatix:
         ls-backuppc:
+        ls-confluence:
         ls-jira:
         ls-jumphost:
         ls-mybackup:
