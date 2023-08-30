@@ -22,6 +22,7 @@
 
   roles:
     - arbeitsplatzsoftware
+    - nosnap
     - joinad
     - notes
     - pam_mounts

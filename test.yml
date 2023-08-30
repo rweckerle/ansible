@@ -1,6 +1,6 @@
 ---
-- hosts: linuxserver
+- hosts: adopt
   become: true
 
   roles:
-    - icinga
+    - nosnap

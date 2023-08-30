@@ -1,0 +1,9 @@
+---
+- hosts: linuxserver
+  become: true
+
+  tasks:
+    - name: update all packages
+      apt:
+        update_cache: yes
+        upgrade: dist
