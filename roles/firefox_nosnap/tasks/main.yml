@@ -1,0 +1,29 @@
+---
+- name: Add Mozilla repo
+  apt_repository:
+    repo: ppa:mozillateam/ppa
+
+- name: restart NetworkManager for preventing errors
+  systemd:
+    name: NetworkManager
+    state: restarted
+
+- name: install firefox
+  apt:
+    name: firefox
+    state: present
+    default_release: 'o=LP-PPA-mozillateam'
+
+- name: allow unattended firefox upgrades
+  lineinfile:
+    path: /etc/apt/apt.conf.d/50unattended-upgrades
+    line: 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";'
+    state: present
+
+- name: give Mozilla repo high prio
+  copy:
+    src: firefox.pref
+    dest: /etc/apt/preferences.d/mozillateamppa/
+    owner: root
+    group: root
+    mode: 0440
