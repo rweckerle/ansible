@@ -1,6 +1,0 @@
----
-- hosts: adopt
-  become: true
-
-  roles:
-    - nosnap
