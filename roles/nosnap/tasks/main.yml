@@ -45,8 +45,3 @@
     owner: root
     group: root
     mode: 0440
-
-- name: restart NetworkManager for preventing errors
-  systemd:
-    name: NetworkManager
-    state: restarted
