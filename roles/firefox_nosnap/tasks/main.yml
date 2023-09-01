@@ -23,7 +23,12 @@
 - name: give Mozilla repo high prio
   copy:
     src: firefox.pref
-    dest: /etc/apt/preferences.d/mozillateamppa/
+    dest: /etc/apt/preferences.d/
     owner: root
     group: root
     mode: 0440
+      
+- name: uninstall update-manager
+  apt:
+    name: update-manager
+    state: absent

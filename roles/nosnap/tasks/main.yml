@@ -1,5 +1,6 @@
 ---
 - name: Remove common snaps
+  ignore_errors: true
   community.general.snap:
     name:
       - firefox
@@ -11,16 +12,19 @@
     state: absent
 
 - name: Remove lxd
+  ignore_errors: true
   community.general.snap:
     name: lxd
     state: absent
 
 - name: remove bare
+  ignore_errors: true
   community.general.snap:
     name: bare
     state: absent
 
 - name: Remove core2X
+  ignore_errors: true
   community.general.snap:
     name: 
       - core20
@@ -28,6 +32,7 @@
     state: absent
 
 - name: Remove snapd
+  ignore_errors: true
   community.general.snap:
     name: snapd
     state: absent
