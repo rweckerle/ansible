@@ -60,10 +60,3 @@
     name: flathub
     state: present
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
-
-      #- name: install Flatpaks
-      #  tags: software
-      #  community.general.flatpak:
-      #    name:
-      #      - org.onlyoffice.desktopeditors
-
