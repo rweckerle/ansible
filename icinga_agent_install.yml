@@ -1,0 +1,26 @@
+---
+- name: install icinga2 agent
+  hosts: all
+  become: true
+  vars:
+    icinga2_confd: false # Disable example configuration
+    icinga2_purge_features: yes # Ansible will manage all features
+    icinga2_delegate_host: panix.phytec.de
+    icinga2_features:
+      - name: api           # Enable Feature API
+        ca_host: panix.phytec.de
+        # Trusted Cert and Ticket will be gathered from this host.
+        # Ticket will be "delegated" if the FQDN is not in your Ansible environment
+        # use the variable icinga2_delegate_host in addition.
+        endpoints:
+          - name: '{{ inventory_hostname }}'
+        zones:
+          - name: director-global
+            endpoints:
+              - '{{ inventory_hostname }}'
+      - name: notification
+        state: absent
+
+  roles:
+    - icinga.icinga.repos
+    - icinga.icinga.icinga2
