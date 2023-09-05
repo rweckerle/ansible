@@ -13,11 +13,18 @@
         # Ticket will be "delegated" if the FQDN is not in your Ansible environment
         # use the variable icinga2_delegate_host in addition.
         endpoints:
-          - name: '{{ inventory_hostname }}'
+          - name: '{{ ansible_fqdn }}'
+          - name: panix.phytec.de
         zones:
-          - name: director-global
+          - name: '{{ ansible_fqdn }}'
             endpoints:
-              - '{{ inventory_hostname }}'
+              - '{{ ansible_fqdn }}'
+            parent: panix.phytec.de
+          - name: panix.phytec.de
+            endpoints:
+              - panix.phytec.de
+          - name: director-global
+            global: true
       - name: notification
         state: absent
 
