@@ -1,3 +1,0 @@
-[submodule "roles/deploy-icinga-agent"]
-	path = roles/deploy-icinga-agent
-	url = https://codeberg.org/thomas.leister/ansible-deploy-icinga-agent.git
