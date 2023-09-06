@@ -28,6 +28,7 @@ linuxserver:
         ls-patchwork2:
         ls-review:
         ls-softix:
+        ls-tftp:
         ls-vcs:
         lws-remote:
         Mentor3DLib:
