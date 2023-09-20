@@ -1,4 +1,9 @@
 ---
+- name: upgrade packages
+  apt:
+    update_cache: yes
+    upgrade: dist
+
 - name: Add onlyoffice gpg keys
   apt_key:
     keyserver: "keyserver.ubuntu.com"

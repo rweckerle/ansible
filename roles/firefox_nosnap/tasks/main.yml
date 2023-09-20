@@ -22,7 +22,7 @@
 
 - name: give Mozilla repo high prio
   copy:
-    src: firefox.pref
+    src: mozillateam
     dest: /etc/apt/preferences.d/
     owner: root
     group: root
