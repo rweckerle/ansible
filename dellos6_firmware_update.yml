@@ -3,6 +3,8 @@
   hosts: dellos6
   become: true
   gather_facts: no
+  roles:
+    - dellos6_backup_config
 
   tasks:
     - name: download firmware image to backup storage

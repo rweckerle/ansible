@@ -1,0 +1,9 @@
+---
+- name: backup running config
+  dellos6_command:
+    commands:
+      - command: copy running-config tftp://172.25.0.73/switch_configs/{{ inventory_hostname }}.txt
+        prompt: '\(y/n\)\s?$'
+        answer: 'y'
+  register: handle_prompt
+- debug: var=handle_prompt
