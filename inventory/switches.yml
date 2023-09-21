@@ -52,4 +52,6 @@ dellos6:
       ansible_host: 172.25.134.225
     Backup-XS1939:
       ansible_host: 172.25.128.21
+    SW_A_02_Test01:
+      ansible_host: 172.25.132.8
       

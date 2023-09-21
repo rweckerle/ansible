@@ -1,0 +1,35 @@
+---
+- name: update firmware
+  hosts: dellos6
+  become: true
+  gather_facts: no
+
+  tasks:
+    - name: download firmware image to backup storage
+      dellos6_command:
+        commands:
+          - command: copy tftp://172.25.0.73/switch/N1500v6.7.1.22.stk backup
+            prompt: '\(y/n\)\s?$'
+            answer: "yes"
+        wait_for: result[0] contains successfully
+      register: handle_prompt
+
+    - debug: var=handle_prompt
+
+    - name: set backup as next boot image
+      dellos6_command:
+        commands: boot system backup
+
+    - name: save new config
+      dellos6_command:
+        commands:
+          - command: write
+            prompt: '\(y/n\)\s?$'
+            answer: 'y'
+
+    - name: reboot to new firmware
+      dellos6_command:
+        commands:
+          - command: reload
+            prompt: '\(y/n\)\s?$'
+            answer: 'y'
