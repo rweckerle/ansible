@@ -15,6 +15,7 @@ linuxserver:
         intranet03:
         ls-automatix:
         ls-backuppc:
+        ls-bitwarden:
         ls-confluence:
         ls-jira:
         ls-jumphost:
