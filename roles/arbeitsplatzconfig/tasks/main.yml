@@ -6,3 +6,7 @@
     block: |
       %domain\ users  ALL=(ALL:ALL) ALL
 
+- name: remove cloud-init
+  apt:
+    name: cloud-init
+    state: absent
