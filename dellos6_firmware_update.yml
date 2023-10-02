@@ -30,6 +30,7 @@
             answer: 'y'
 
     - name: reboot to new firmware
+      poll: 0
       dellos6_command:
         commands:
           - command: reload
