@@ -1,0 +1,51 @@
+---
+- name: install needed software
+  apt:
+    update_cache: no
+    name:
+      - build-essential
+      - openssh-server
+      - tftpd-hpa
+      - xinetd
+      - virtualenv
+      - cifs-utils
+      - bindfs
+      - sshpass
+      - isc-dhcp-server
+      - iperf3
+      - libudev-dev
+      - libudev1
+      - libusb-1.0-0
+      - libusb-1.0-0-dev
+      - libusb-dev
+      - libbluetooth-dev
+      - dfu-util
+      - can-utils
+      - uuu
+      - ser2net
+      - tio
+      - python3.10
+      - systemd-journal-remote
+      - software-properties-common
+      - apt-transport-https
+      - openjdk-11-jre
+      - sssd
+      - sssd-tools
+      - samba
+      - smbclient
+      - libpam-mount
+      - libpam-ccreds
+      - keyutils
+      - hxtools
+      - realmd
+      - adcli
+      - vim
+      - unattended-upgrades
+      - wget
+      - gnupg
+      - git
+      - krdc
+      - ser2net
+      - uhubctl
+      - libssl-dev
+

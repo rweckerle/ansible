@@ -1,0 +1,2 @@
+# mcp2221 for DH-002 and DH-013
+SUBSYSTEM=="usb", ATTRS{idVendor}=="04d8", ATTR{idProduct}=="00dd", MODE="0666"

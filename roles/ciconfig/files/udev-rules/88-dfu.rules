@@ -1,0 +1,2 @@
+# rules for bootloader in device firmware update DFU mode
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="1d50", GROUP="dialout", MODE="0660"

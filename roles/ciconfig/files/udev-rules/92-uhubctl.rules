@@ -1,0 +1,2 @@
+SUBSYSTEM=="usb", ATTR{idVendor}=="2109", ATTR{idProduct}=="2817", GROUP="plugdev", MODE="0664"
+SUBSYSTEM=="usb", ATTR{idVendor}=="2109", ATTR{idProduct}=="0817", GROUP="plugdev", MODE="0664"

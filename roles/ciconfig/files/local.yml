@@ -1,0 +1,14 @@
+ethernet0:
+  name: enp2s0
+  ip: 192.168.0.1
+ethernet1:
+  name: enp2s0
+  ip: 192.168.3.10
+tftp:
+  path: /var/tftp
+nfs:
+  path: /var/nfs_files
+nfsroot:
+  path: /var/nfs_root
+share:
+  path: /mnt

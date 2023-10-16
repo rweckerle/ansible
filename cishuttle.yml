@@ -15,6 +15,9 @@
         line: '127.0.1.1 {{ inventory_hostname }}.phytec.de'
 
   roles:
-    - unattendedautoremove
+    #    - ubuntu_update
+    #    - cisoftware
+    #    - unattendedautoremove
     - joinad
-    - cishuttleconfig
+    #    - ciconfig
+

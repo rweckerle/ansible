@@ -1,0 +1,126 @@
+---
+- name: purge cloud-init
+  apt:
+    name: cloud-init
+    purge: true
+    autoremove: true
+    state: absent
+
+- name: delete all cloud-init leftovers
+  shell: rm -rf /etc/cloud
+
+- name: set group memberships for all users
+  lineinfile:
+    path: /etc/security/group.conf
+    line: "*;*;*;Al0000-2400;dialout,plugdev,netdev,systemd-journal-remote"
+    state: present
+
+- name: permission fix for /home/automatix
+  shell: cp -R /etc/skel/* /home/automatix/ && chown -R automatix:10513 /home/automatix
+
+
+      ### creating needed directories ###
+
+- name: creating needed automatix user directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: automatix
+    group: 10513
+  loop:
+    - /mnt/N_lw
+    - /mnt/sw_data
+    - /home/automatix/.smb
+    - /home/automatix/.ssh
+    - /home/automatix/.config
+    - /home/automatix/.config/ptf
+
+
+      ### copying of config files ###
+
+- name: copy udev rules
+  copy:
+    src: udev-rules/
+    dest: /etc/udev/rules.d/
+
+- name: copy dhcp, tftp, sudoers and fuse confs
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - src: isc-dhcp-server
+      dest: /etc/default/
+    - src: dhcpd.conf
+      dest: /etc/dhcp/
+    - src: fuse.conf
+      dest: /etc/
+    - src: tftpd-hpa
+      dest: /etc/default/
+    - src: iplink
+      dest: /etc/sudoers.d/iplink
+
+- name: copy automatix config files
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - src: authorized_keys
+      dest: /home/automatix/.ssh/
+    - src: known_hosts
+      dest: /home/automatix/.ssh/
+    - src: .smbcredentials
+      dest: /home/automatix/.smb/
+    - src: local.yml
+      dest: /home/automatix/.config/ptf/
+
+
+      ### additional config ###
+
+- name: update fstab
+  blockinfile:
+    path: /etc/fstab
+    state: present
+    block: |
+      # Romulus
+      //Romulus/N-lw /mnt/N_lw cifs credentials=/home/automatix/.smb/.smbcredentials,file_mode=0664,dir_mode=0775,uid=automatix,gid=10513,nosuid,nodev,vers=2.1,nofail  0 0
+
+      # Remus
+      //ls-softix/data /mnt/sw_data cifs credentials=/home/automatix/.smb/.smbcredentials,file_mode=0664,dir_mode=0775,uid=automatix,gid=10513,nosuid,nodev,vers=2.1,domain=phytec.de,nofail  0 0
+
+- name: setting up TFTP
+  file:
+    path: /var/tftp/images
+    state: directory
+    owner: nobody
+    mode: 0777
+
+- name: editing systemd-journal-remote service
+  shell: sed -e 's/listen-https/listen-http/' /lib/systemd/system/systemd-journal-remote.service | sudo tee /etc/systemd/system/systemd-journal-remote.service
+
+- name: creating directory for systemd-journal-remote
+  file:
+    path: /var/log/journal/remote
+    state: directory
+    owner: systemd-journal-remote
+
+- name: start systemd-journal-remote service
+  systemd:
+    name: systemd-journal-remote
+    state: restarted
+    enabled: true
+    masked: false
+
+
+      ### Workaround for MCP2221 kernel module driver load delay ###
+
+- name: remove mcp2221 kernel Module
+  shell: modprobe -r hid_mcp2221
+
+- name: blacklist module
+  copy:
+    dest: /etc/modprobe.d/hid_mcp2221.conf
+    content: |
+      blacklist hid_mcp2221
+
+- name: update initramfs
+  shell: update-initramfs -u

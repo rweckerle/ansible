@@ -1,0 +1,5 @@
+---
+- name: update all software
+  apt:
+    update_cache: yes
+    upgrade: dist
