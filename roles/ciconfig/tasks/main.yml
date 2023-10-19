@@ -63,6 +63,8 @@
   copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
+    owner: automatix
+    group: 10513
   loop:
     - src: authorized_keys
       dest: /home/automatix/.ssh/
