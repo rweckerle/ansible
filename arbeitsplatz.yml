@@ -15,7 +15,6 @@
         line: '127.0.1.1 {{ inventory_hostname }}.phytec.de'
 
     - name: restart networkmanager
-      tags: config
       systemd:
         name: NetworkManager.service
         state: restarted

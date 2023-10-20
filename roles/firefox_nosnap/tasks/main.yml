@@ -1,4 +1,9 @@
 ---
+- name: bugfix for NetworkManager not resolving hosts
+  systemd:
+    name: NetworkManager.service
+    state: restarted
+
 - name: Add Mozilla repo
   apt_repository:
     repo: ppa:mozillateam/ppa

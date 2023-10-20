@@ -1,6 +1,5 @@
 ---
 - name: set network device mounts
-  tags: config
   blockinfile:
     path: /etc/security/pam_mount.conf.xml
     marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
