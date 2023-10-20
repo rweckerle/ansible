@@ -1,17 +1,12 @@
 ---
-- name: bugfix for NetworkManager not resolving hosts
+- name: restart NetworkManager for preventing errors
   systemd:
-    name: NetworkManager.service
+    name: NetworkManager
     state: restarted
 
 - name: Add Mozilla repo
   apt_repository:
     repo: ppa:mozillateam/ppa
-
-- name: restart NetworkManager for preventing errors
-  systemd:
-    name: NetworkManager
-    state: restarted
 
 - name: install firefox
   apt:
@@ -27,7 +22,7 @@
 
 - name: give Mozilla repo high prio
   copy:
-    src: mozillateam
+    src: firefox.pref
     dest: /etc/apt/preferences.d/
     owner: root
     group: root
