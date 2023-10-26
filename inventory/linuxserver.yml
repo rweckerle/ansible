@@ -4,7 +4,7 @@ linuxserver:
   children:
     ubuntu:
       hosts:
-        Amnesix:
+        amnesix:
         bartrik:
         cups:
         ecus:
@@ -32,14 +32,14 @@ linuxserver:
         ls-tftp:
         ls-vcs:
         lws-remote:
-        Mentor3DLib:
+        mentor3dlib:
         miraculix:
         mitgenus:
-        Mopsen:
+        mopsen:
         odalix:
         panix:
         polemix:
-        Studicus:
+        studicus:
         tullius:
         tunnelnix:
 
