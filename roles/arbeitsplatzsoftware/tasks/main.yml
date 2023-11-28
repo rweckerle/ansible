@@ -19,7 +19,7 @@
   shell: dpkg --add-architecture i386
 
 - name: add mattermost repository
-  shell: curl -o- https://deb.packages.mattermost.com/setup-repo.sh | bash
+  shell: wget -qO- https://deb.packages.mattermost.com/setup-repo.sh | bash
 
 - name: install software prerequisite
   apt:
