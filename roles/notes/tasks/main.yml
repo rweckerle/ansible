@@ -1,12 +1,20 @@
 ---
-- name: copy notes files
+- name: copy Notes files
   unarchive:
     src: Notes_basic.tar.gz
     dest: /usr/share
-
-- name: set permissions
-  file:
-    path: /usr/share/Notes_basic
     mode: '0777'
     owner: root
-    recurse: true
+
+- name: copy Notes desktop shortcut to skel
+  unarchive:
+    src: Schreibtisch.tar.gz
+    dest: /etc/skel
+    mode: '0777'
+
+      #- name: set permissions for Notes
+      #  file:
+      #    path: /usr/share/Notes_basic
+      #    mode: '0777'
+      #    owner: root
+      #    recurse: true
