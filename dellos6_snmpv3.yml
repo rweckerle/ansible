@@ -1,0 +1,19 @@
+---
+- name: configure dhcp snooping
+  hosts: dellos6
+  become: true
+  gather_facts: no
+
+  tasks:
+    - name: create snmpv3 user phytec
+      dellos6_config:
+        lines:
+          - snmp-server user phytec DefaultRead auth-sha '{{ snmpv3pass }}'  priv-aes128 '{{ snmpv3pass }}'
+
+    - name: save new config
+      dellos6_command:
+        commands:
+          - command: write
+            prompt: '\(y/n\)\s?$'
+            answer: 'y'
+
