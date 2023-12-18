@@ -23,3 +23,11 @@
           - ip dhcp snooping trust
         parents: ['interface range tengigabitethernet all']
         save: yes
+
+    - name: save new config
+      dellos6_command:
+        commands:
+          - command: write
+            prompt: '\(y/n\)\s?$'
+            answer: 'y'
+
