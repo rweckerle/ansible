@@ -18,15 +18,18 @@
 - name: add 32-Bit arch for wine32
   shell: dpkg --add-architecture i386
 
+- name: install curl
+  apt:
+    pkg: curl
+
 - name: add mattermost repository
-  shell: wget -qO- https://deb.packages.mattermost.com/setup-repo.sh | bash
+  shell: curl -qO- https://deb.packages.mattermost.com/setup-repo.sh | bash
 
 - name: install software prerequisite
   apt:
     pkg: 
       - wine32
       - mattermost-desktop
-      - curl
       - build-essential
       - ubuntu-desktop-minimal
       - sssd
