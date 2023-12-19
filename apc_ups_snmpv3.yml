@@ -1,0 +1,15 @@
+---
+- hosts: apc_ups
+  gather_facts: false
+
+  tasks:
+    - name: create snmpv3 user phytec
+      haught.apcos.apcos_snmpv3:
+        enable: true
+        index: 1
+        username: phytec
+        authprotocol: SHA
+        authphrase: '{{ snmpv3pass }}'
+        privprotocol: AES
+        privphrase: '{{ snmpv3pass }}'
+        access: true
