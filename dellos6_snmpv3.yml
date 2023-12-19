@@ -1,6 +1,5 @@
 ---
-- name: configure dhcp snooping
-  hosts: dellos6
+- hosts: dellos6
   become: true
   gather_facts: no
 
