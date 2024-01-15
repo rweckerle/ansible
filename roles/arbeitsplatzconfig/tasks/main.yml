@@ -1,10 +1,10 @@
 ---
-- name: Give sudo access to domain users
-  blockinfile:
-    path: /etc/sudoers
-    insertafter: '%sudo ALL=(ALL:ALL) ALL'
-    block: |
-      %domain\ users  ALL=(ALL:ALL) ALL
+#- name: Give sudo access to domain users
+#  blockinfile:
+#    path: /etc/sudoers
+#    insertafter: '%sudo ALL=(ALL:ALL) ALL'
+#    block: |
+#      %domain\ users  ALL=(ALL:ALL) ALL
 
 - name: remove cloud-init
   apt:
