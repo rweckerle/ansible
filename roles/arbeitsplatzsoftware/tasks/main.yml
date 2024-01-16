@@ -23,7 +23,7 @@
     pkg: curl
 
 - name: add mattermost repository
-  shell: curl -qO- https://deb.packages.mattermost.com/setup-repo.sh | bash
+  shell: curl -o- https://deb.packages.mattermost.com/setup-repo.sh | bash
 
 - name: install software prerequisite
   apt:
