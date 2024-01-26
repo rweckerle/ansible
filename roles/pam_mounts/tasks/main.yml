@@ -17,4 +17,6 @@
               options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID)" />
       <volume pgrp="domain users" server="augenblix2" path="%(USER)" mountpoint="~/share/augenblix2" fstype="cifs"
               options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID)" />
+      <volume pgrp="domain users" server="ls-softix" path="data" mountpoint="~/share/data" fstype="cifs"
+              options="file_mode=0600,dir_mode=0700,nosuid,nodev,sec=krb5,cruid=%(USERUID)" />
 
