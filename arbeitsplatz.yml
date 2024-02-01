@@ -21,8 +21,8 @@
 
   roles:
     - arbeitsplatzsoftware
-    - nosnap
-    - firefox_nosnap
+    #- nosnap
+    #- firefox_nosnap
     - joinad
     - notes
     - pam_mounts
