@@ -25,6 +25,7 @@ linuxserver:
         ls-mysql:
         ls-mysql02:
         ls-mysql03:
+        ls-mysql04:
         ls-patchwork:
         ls-patchwork2:
         ls-review:
