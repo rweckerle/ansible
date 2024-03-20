@@ -12,6 +12,7 @@ linuxserver:
         gaudeamus:
         intranet01:
         intranet02:
+          ansible_python_interpreter: /usr/bin/python2
         intranet03:
         ls-automatix:
         ls-backuppc:
