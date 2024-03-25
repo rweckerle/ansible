@@ -14,21 +14,26 @@ linuxserver:
         intranet02:
           ansible_python_interpreter: /usr/bin/python2
         intranet03:
+        linux-itfs2:
         ls-automatix:
-        ls-backuppc:
         ls-bitwarden:
         ls-confluence:
+          ansible_python_interpreter: /usr/bin/python2
         ls-jira:
+          ansible_python_interpreter: /usr/bin/python2
         ls-jumphost:
         ls-mybackup:
         ls-mybackup02:
+          ansible_python_interpreter: /usr/bin/python2
         ls-mybackup03:
         ls-mysql:
+          ansible_python_interpreter: /usr/bin/python2
         ls-mysql02:
         ls-mysql03:
         ls-mysql04:
         ls-patchwork:
         ls-patchwork2:
+          ansible_python_interpreter: /usr/bin/python2
         ls-review:
         ls-softix:
         ls-tftp:
