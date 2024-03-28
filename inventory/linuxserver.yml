@@ -14,11 +14,14 @@ linuxserver:
         intranet02:
           ansible_python_interpreter: /usr/bin/python2
         intranet03:
+        knx-gateway01:
+        knx-gateway02:
         linux-itfs2:
         ls-automatix:
         ls-bitwarden:
         ls-confluence:
           ansible_python_interpreter: /usr/bin/python2
+        ls-git:
         ls-jira:
           ansible_python_interpreter: /usr/bin/python2
         ls-jumphost:
@@ -29,6 +32,7 @@ linuxserver:
         ls-mysql:
           ansible_python_interpreter: /usr/bin/python2
         ls-mysql02:
+          ansible_python_interpreter: /usr/bin/python2
         ls-mysql03:
         ls-mysql04:
         ls-patchwork:
@@ -47,6 +51,8 @@ linuxserver:
         panix:
         polemix:
         studicus:
+        testnix:
+          ansible_python_interpreter: /usr/bin/python2
         tullius:
         tunnelnix:
 
