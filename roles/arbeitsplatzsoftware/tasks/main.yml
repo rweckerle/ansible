@@ -68,3 +68,8 @@
     name: flathub
     state: present
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+- name: remove cloud-init
+  apt:
+    name: cloud-init
+    state: absent
