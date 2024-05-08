@@ -39,6 +39,7 @@ linuxserver:
         ls-patchwork2:
           ansible_python_interpreter: /usr/bin/python2
         ls-review:
+        ls-sentry:
         ls-softix:
         ls-tftp:
         ls-vcs:
