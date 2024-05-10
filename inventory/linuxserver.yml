@@ -60,3 +60,6 @@ linuxserver:
     fedora:
       hosts:
         musculus:
+    redhat:
+      hosts:
+        ls-idera:
