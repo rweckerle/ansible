@@ -19,7 +19,7 @@
       user:
         name: '{{ username }}'
         password: ''
-        groups: no_ssh_pw, wheel
+        groups: no_ssh_pw, sudo
         append: yes
         shell: /bin/bash
 
