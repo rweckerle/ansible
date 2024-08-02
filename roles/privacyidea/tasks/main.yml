@@ -3,6 +3,7 @@
   apt:
     update_cache: yes
     name:
+      - python3-venv
       - python3-pip
       - git
     state: present
