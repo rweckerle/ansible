@@ -63,13 +63,8 @@
 
 - name: create/update authorizedkeyscommand
   copy:
-    dest: /etc/privacyidea/authorizedkeyscommand
-    content: |
-      [Default]
-      url=https://polemix.phytec.de
-      admin=readadmin
-      password=WQIJhmswLU7jnKggVKOl
-      nosslcheck=False
+    src: authorizedkeyscommand
+    dest: /etc/privacyidea
     force: true
 
 - name: change sshd_config
