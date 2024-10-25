@@ -2,11 +2,12 @@
 - hosts: all
   become: true
   gather_facts: no
-  vars_prompt:
 
+  vars_prompt:
     - name: username
       prompt: Enter username
       private: false
+      when: username is not defined
 
   tasks:
 
