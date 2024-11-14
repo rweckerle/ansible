@@ -23,6 +23,7 @@
     - arbeitsplatzsoftware
     - nosnap
     - firefox_nosnap
+    - ntp
     - joinad
     - notes
     - pam_mounts

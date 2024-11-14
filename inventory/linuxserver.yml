@@ -58,9 +58,6 @@ linuxserver:
         tullius:
         tunnelnix:
 
-    fedora:
-      hosts:
-        musculus:
     redhat:
       hosts:
         ls-idera:

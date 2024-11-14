@@ -1,0 +1,14 @@
+---
+- name: set NTP to Domain Controller
+  lineinfile:
+    path: /etc/systemd/timesyncd.conf
+    line: "{{ item }}"
+  loop:
+    - NTP=172.25.0.2 172.25.0.3
+    - FallbackNTP=ntp.ubuntu.com 0.de.pool.ntp.org
+
+- name: restart timesyncd
+  systemd:
+    name: systemd-timesyncd
+    state: restarted
+    daemon_reload: true
