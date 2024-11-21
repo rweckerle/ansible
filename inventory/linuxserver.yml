@@ -26,6 +26,7 @@ linuxserver:
         ls-jira:
           ansible_python_interpreter: /usr/bin/python2
         ls-jumphost:
+        ls-lists:
         ls-mybackup:
         ls-mybackup02:
           ansible_python_interpreter: /usr/bin/python2
