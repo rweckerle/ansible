@@ -14,7 +14,7 @@
     state: present
     default_release: 'o=LP-PPA-mozillateam'
 
-- name: allow unattended firefox upgrades
+- name: allow unattended upgrades
   lineinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
     line: 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";'
@@ -22,7 +22,7 @@
 
 - name: give Mozilla repo high prio
   copy:
-    src: firefox.pref
+    src: mozilla.pref
     dest: /etc/apt/preferences.d/
     owner: root
     group: root

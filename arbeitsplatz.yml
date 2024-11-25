@@ -22,7 +22,7 @@
   roles:
     - arbeitsplatzsoftware
     - nosnap
-    - firefox_nosnap
+    - mozilla_nosnap
     - ntp
     - joinad
     - notes

@@ -69,7 +69,8 @@
     state: present
     flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
 
-- name: remove cloud-init
+- name: remove unneeded packages
   apt:
     name: cloud-init
+    name: ubuntu-pro-client
     state: absent
