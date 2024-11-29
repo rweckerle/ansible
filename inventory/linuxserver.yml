@@ -21,6 +21,7 @@ linuxserver:
         ls-bitwarden:
         ls-confluence:
           ansible_python_interpreter: /usr/bin/python2
+        ls-devpi:
         ls-defguard:
         ls-git:
         ls-jira:

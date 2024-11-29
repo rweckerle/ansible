@@ -1,0 +1,21 @@
+---
+
+- name: download keyfile
+  get_url:
+    url: https://repo.teamsforlinux.de/teams-for-linux.asc
+    dest: /etc/apt/keyrings/teams-for-linux.asc
+
+- name: add listfile
+  copy:
+    src: teams-for-linux-packages.list
+    dest: /etc/apt/sources.list.d/
+
+- name: add apparmor profile
+  copy:
+    src: teams-for-linux
+    dest: /etc/apparmor.d/
+
+- name: install teams
+  apt:
+    name: teams-for-linux
+    update_cache: true
